@@ -28,19 +28,13 @@ public class Dijkstra {
         heap.setEmpty(false);
         Arrays.fill(finished, false);
         this.start = start;
-        //Arrays.fill(prev, INFINITE); // fill with Infinite
         this.heap.insert(start, 0); // add the start node to the heap
-        //prev[start] = start; // and for reasons we say the previous node of start is start
 
         //dijkstra algorithm
         while (heap.getSize() > 0) {
             int finishedNode = heap.deleteMin(); // get node with shortest path
             int finishedValue = heap.getValueOf(finishedNode);
             finished[finishedNode] = true;
-
-            //if (finishedNode[1]==INFINITE) return;
-            //           ArrayList<int[]> list = graph.edgesOfNode(finishedNode); // get all outgoing edges of finishedNode
-
             int offset = graph.getOffsetOf(finishedNode);
             if (offset == -1) continue;
             while (offset < graph.getEdgeCount() && graph.getSourceOf(offset) == finishedNode) {
@@ -104,11 +98,6 @@ public class Dijkstra {
 
     public int distanceTo(int destination) {
         return heap.getValueOf(destination);
-    }
-
-    public boolean existsPathTo(int destination) {
-        return heap.getValueOf(destination) != -1;
-
     }
 
     public Iterator<Integer> pathTo(int destination) {

@@ -1,5 +1,3 @@
-import spark.QueryParamsMap;
-
 import static spark.Spark.*;
 
 public class Server {
@@ -12,12 +10,10 @@ public class Server {
 
         init();
         post("/api/latLon", (req, res) -> {
-            QueryParamsMap map = req.queryMap();
             try {
                 var lat = Double.parseDouble(req.queryParams("lat"));
                 var lon = Double.parseDouble(req.queryParams("lon"));
-                var tmp = graph.getNextNode(lat, lon);
-                return tmp;
+                return graph.getNextNode(lat, lon);
             } catch (Exception e) {
                 return "Error: " + e.getMessage();
             }
@@ -28,14 +24,13 @@ public class Server {
                 var start = Integer.parseInt(req.queryParams("start"));
                 var dest = Integer.parseInt(req.queryParams("dest"));
                 dijkstra.dijkstra(start, dest);
-                var dist = dijkstra.distanceTo(dest);
                 var iter = dijkstra.pathTo(dest);
                 StringBuilder output = new StringBuilder();
                 while (iter.hasNext()) {
                     int current = iter.next();
-                    output.append(graph.getLatOf(current)).append(" ").append(graph.getLonOf(current)).append(" ");
+                    output.append(graph.getLatOf(current)).append(" ").append(graph.getLonOf(current)).append(" ");// add the lat and lon of every node to the string
                 }
-                output.append(dist);
+                output.append(dijkstra.distanceTo(dest));//add the distance to the destination
                 return output.toString();
             } catch (Exception e) {
                 return "Error: " + e.getMessage();

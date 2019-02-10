@@ -110,12 +110,6 @@ public class Heap implements IHeap {
     }
 
     @Override
-    public boolean isLeaf(int index) {
-        return false;
-    }
-
-
-    @Override
     public double getLeafCount() {
         return Math.floor(size / 2.0);
     }

@@ -79,11 +79,6 @@ public class Graph {
         return offset[node];
     }
 
-
-    public int getEdgeWeight(int edge) {
-        return 0;
-    }
-
     public int getWeigtOf(int edge) {
         return this.weight[edge];
     }

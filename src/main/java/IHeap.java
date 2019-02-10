@@ -96,8 +96,6 @@ public interface IHeap {
      */
     int getSize();
 
-    boolean isLeaf(int index);
-
     double getLeafCount();
 
     boolean hasRight(int index);

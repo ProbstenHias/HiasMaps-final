@@ -43,20 +43,19 @@
             async: false,
             success: function (d) {
                 location = d;
+                var arr = location.split(' ');
+                var id = parseInt(arr[0]);
+                var lat = parseFloat(arr[1]);
+                var lon = parseFloat(arr[2]);
+
+                var marker = L.marker([lat, lon]).addTo(mymap);
+                marker.bindPopup(id + " " + lat + " " + lon).openPopup();
+                searchMarker.push(marker);
+                searchID.push(id);
+                mymap.addLayer(marker);
 
             }
         });
-        var arr = location.split(' ');
-        var id = parseInt(arr[0]);
-        console.log(id);
-        var lat = parseFloat(arr[1]);
-        var lon = parseFloat(arr[2]);
-
-        var marker = L.marker([lat, lon]).addTo(mymap);
-        marker.bindPopup(id + " " + lat + " " + lon).openPopup();
-        searchMarker.push(marker);
-        searchID.push(id);
-        mymap.addLayer(marker);
 
     }
 
@@ -73,18 +72,16 @@
                 async: false,
                 success: function (d) {
                     list = d.split(' ');
-                    console.log(list);
+                    var latlongs = [];
+                    for (i = 0; i < (list.length - 1) / 2; i++) {
+                        latlongs.push([parseFloat(list[i * 2]), parseFloat(list[i * 2 + 1])])
+                    }
+                    polyline = L.polyline(latlongs, {color: 'red'}).addTo(mymap);
+                    mymap.fitBounds(polyline.getBounds());
+                    // alert("distance: " + list.slice(-1)[0])
                 }
             });
 
-
-            var latlongs = [];
-            for (i = 0; i < (list.length - 1) / 2; i++) {
-                latlongs.push([parseFloat(list[i * 2]), parseFloat(list[i * 2 + 1])])
-            }
-            polyline = L.polyline(latlongs, {color: 'red'}).addTo(mymap);
-            mymap.fitBounds(polyline.getBounds());
-            // alert("distance: " + list.slice(-1)[0])
         } else {
             alert("Please set two markers first!")
         }
