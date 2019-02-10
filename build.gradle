@@ -1,5 +1,7 @@
+
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'HiaslMaps'
@@ -9,6 +11,9 @@ sourceCompatibility = 11
 
 repositories {
     mavenCentral()
+}
+application {
+    mainClassName = 'Server'
 }
 
 dependencies {
