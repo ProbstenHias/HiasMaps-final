@@ -2,10 +2,10 @@ import static spark.Spark.*;
 
 public class Server {
     public static void main(String[] args) {
-        Graph graph = new Graph("GraphFiles/germany.fmi");// path to map here
+        Graph graph = new Graph(args[0]);// path to map here
         Dijkstra dijkstra = new Dijkstra(graph);
         exception(Exception.class, (e, req, res) -> e.printStackTrace()); // print all exceptions
-        port(8080);
+        port(Integer.parseInt(args[1]));
         staticFiles.location("/public");
 
         init();
@@ -23,7 +23,11 @@ public class Server {
             try {
                 var start = Integer.parseInt(req.queryParams("start"));
                 var dest = Integer.parseInt(req.queryParams("dest"));
+                long startTime = System.nanoTime();
                 dijkstra.dijkstra(start, dest);
+                long endTime = System.nanoTime();
+                long finalTime = endTime - startTime;
+                System.out.printf("Time to calc dijkstra in seconds: %.2f %n", finalTime / 1.0e9);
                 var iter = dijkstra.pathTo(dest);
                 StringBuilder output = new StringBuilder();
                 while (iter.hasNext()) {

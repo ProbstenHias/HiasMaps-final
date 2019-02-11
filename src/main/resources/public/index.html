@@ -8,8 +8,9 @@
             integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
             src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 </head>
-<button onclick="onButtonClick()">Find best route</button>
 <body>
 <div id="mapid" style="width: 98vw; height: 95vh"></div>
 
@@ -18,7 +19,9 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
-
+    L.easyButton('<img src="https://cdn0.iconfinder.com/data/icons/ui-enlarge/100/up_4_3_18_ui_enlarge_45-512.png"style="width: 25px" >', function () {
+        onButtonClick();
+    }).addTo(mymap);
     mymap.on('click', onMapClick);
     var searchMarker = [];
     var searchID = [];
@@ -78,7 +81,7 @@
                     }
                     polyline = L.polyline(latlongs, {color: 'red'}).addTo(mymap);
                     mymap.fitBounds(polyline.getBounds());
-                    // alert("distance: " + list.slice(-1)[0])
+                    alert("distance: " + list.slice(-1)[0])
                 }
             });
 
