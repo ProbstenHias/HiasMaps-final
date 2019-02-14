@@ -8,7 +8,6 @@ import java.util.Iterator;
  * @version 0.1
  */
 public class Dijkstra {
-    private int start;
     private int[] prev;
     private boolean[] finished;
     private Heap heap;
@@ -17,8 +16,9 @@ public class Dijkstra {
     public Dijkstra(Graph graph) {
         this.graph = graph;
         heap = new Heap(graph.getNodeCount()); //create priority queue
-        finished = new boolean[graph.getNodeCount()];
         prev = new int[graph.getNodeCount()];
+        finished = new boolean[graph.getNodeCount()];
+
     }
 
 
@@ -27,7 +27,6 @@ public class Dijkstra {
         if (!heap.isEmpty()) heap.flush();
         heap.setEmpty(false);
         Arrays.fill(finished, false);
-        this.start = start;
         this.heap.insert(start, 0); // add the start node to the heap
 
         //dijkstra algorithm
@@ -62,7 +61,6 @@ public class Dijkstra {
         if (!heap.isEmpty()) heap.flush();
         heap.setEmpty(false);
         Arrays.fill(finished, false);
-        this.start = start;
         Arrays.fill(prev, -1); // fill with Infinite
         this.heap.insert(start, 0); // add the start node to the heap
 
